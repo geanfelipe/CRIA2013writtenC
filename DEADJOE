@@ -1,0 +1,13 @@
+
+*** Modified files in JOE when it aborted on Tue Sep  9 12:40:23 2014
+*** JOE was aborted by signal 1
+
+*** File '.git/MERGE_MSG'
+Merge branch 'master' of github.com:geanfelipe/CRIA2013
+
+# Please enter a commit message to explain why this merge is necessary,
+# especially if it merges an updated upstream into a topic branch.
+# 
+# Lines starting with '#' will be ignored, and an empty message aborts
+# the commit.
+prova eliminatoria CRIA2013
