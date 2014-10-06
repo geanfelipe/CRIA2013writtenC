@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <ctype.h>
+#include <ctype.h> /*converte de minúscula para maiúscula e vice-versa*/
 
 /*
 São três salas idênticas com 360 lugares
@@ -18,19 +18,26 @@ int preencher(int, int, int);
 
 int main()
 {
-	char c;
-	int ok, posicao, sala,numero_da_poltrona;
+	char caracter=' ';
+	int ok, filaLetra, sala,numero_da_poltrona;
 
 	iniciar();
+	
+	printf("Qual o numero da sala[1/2/3]: ");
+	scanf("%d",&sala);
 
-/*posicao=letra_das_fileiras(c); //retorna o valor em int da posicao do char
+	printf("digite letra da fileira: ");
+	scanf("%c",&caracter);
 
-	preencher(sala,posicao,numero_da_poltrona);
-	ok=preencher(1,posicao,20);		//retorna 1 se preencheu e 0 se nao nao prencheeu
-	if (ok==1) printf ("deu certo\n");
-	else printf("n foi\n");
+	printf("digite número da poltrona: ");
+	scanf("%d",&numero_da_poltrona);
 
-	printf("matriz %d\n",poltrona[sala][posicao][numero_da_poltrona]);*/
+	filaLetra=letra_das_fileiras(caracter); //retorna o valor em int da posicao da letra inserida pelo usuário no vetor
+	printf("posicao do char %c é %d\n",caracter ,filaLetra);
+
+	/*ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu e 0 se nao nao prencheeu
+	if (ok) printf ("\nDEU CERTO\n");
+	printf(" %c = letraFileira\n ",caracter);*/
 	
 
 	return 0;
@@ -58,16 +65,18 @@ caracterVerificacao = toupper(caracterVerificacao);
 	for(int i=0;i<21;i++){
 		if (matrizFileira[i]==caracterVerificacao){
 			posicao_da_letra=i;
-			return posicao_da_letra+1;
-			break;
+			return posicao_da_letra;
 		}
 	}
 }
 
-//funcao p preencher caso return ==1 --> preenchido senao nao preenchido 
+/*funcao para caso
+ preencher return igual a 1 --> preenche a vaga
+caso contrário
+ nao preenche
+*/
 int preencher(int sala, int filaLetra, int numero_da_poltrona)
 {
-//	int poltronas_disponiveis[20];
 	int verificar_as_cadeiras_usadas=0;
 	
 	if(poltrona[sala][filaLetra][numero_da_poltrona]=='0'){
@@ -78,13 +87,12 @@ int preencher(int sala, int filaLetra, int numero_da_poltrona)
 		printf("****Lugar ocupado****\na procurar lugar mais próximo na mesma fileira...\n");
 		for(int i=0;i<20;i++){
 			if (poltrona[sala][filaLetra][i]=='0'){
-				poltrona[sala][filaLetra][i]=1;
-				return 1;
-			  break;
+				poltrona[sala][filaLetra][i]='1';
+				return 1;														 //caso tenha preenchido retorna 1													// e sai do loop
 			}else verificar_as_cadeiras_usadas++;
 		}
 
-		//se var verificar_as_cadeiras_usadas == 20 entao todas as cadeiras foram usadas daquela fila
+		//se verificar_as_cadeiras_usadas igual a 20 entao todas as cadeiras foram usadas daquela fila
 		if (verificar_as_cadeiras_usadas==20){
 			return 0;
 		}
