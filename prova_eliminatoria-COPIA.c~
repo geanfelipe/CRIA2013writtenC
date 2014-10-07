@@ -1,13 +1,10 @@
 #include <stdio.h>
-#include <ctype.h>
+#include <ctype.h> /*converte de minúscula para maiúscula e vice-versa*/
 
 /*
 São três salas idênticas com 360 lugares
 */
 
-int filaLetra;
-int sala;
-char letra_da_fileira;
 int numero_da_poltrona;
 char poltrona[3][21][20];
 char matrizFileira[]="ABCDEFGHIJKLMNOPQRSTU";
@@ -21,23 +18,27 @@ int preencher(int, int, int);
 
 int main()
 {
-	char c;
-	int ok;
-	int q;
+	char caracter=' ';
+	int ok, filaLetra, sala,numero_da_poltrona;
+
 	iniciar();
+	
+	printf("Qual o numero da sala[1/2/3]: ");
+	scanf("%d",&sala);
+
 	printf("digite letra da fileira: ");
-	scanf("%c",&c);
-	filaLetra=letra_das_fileiras(c);
-	preencher(1,filaLetra,20);
-	q=preencher(1,filaLetra,20);
+	scanf("%c",&caracter);
+
+	printf("digite número da poltrona: ");
+	scanf("%d",&numero_da_poltrona);
+
+	filaLetra=letra_das_fileiras(caracter); //retorna o valor em int da posicao da letra inserida pelo usuário no vetor
+	printf("posicao do char %c é %d\n",caracter ,filaLetra);
+
+	/*ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu e 0 se nao nao prencheeu
+	if (ok) printf ("\nDEU CERTO\n");
+	printf(" %c = letraFileira\n ",caracter);*/
 	
-	
-/*	if(filaLetra){
-		ok=preencher(1, filaLetra, 21);
-		if (ok) printf("****Vaga comprada com sucesso!****\n");
-		else printf("****Vagas ocupadas****\n");
-	}
-	else printf("posicao nao existe\n");*/
 
 	return 0;
 }
@@ -64,33 +65,34 @@ caracterVerificacao = toupper(caracterVerificacao);
 	for(int i=0;i<21;i++){
 		if (matrizFileira[i]==caracterVerificacao){
 			posicao_da_letra=i;
-			return posicao_da_letra+1;
-			break;
+			return posicao_da_letra;
 		}
 	}
 }
 
-//funcao p preencher caso return ==1 --> preenchido senao nao preenchido 
-int preencher(int sl, int filaD, int np)
+/*funcao para caso
+ preencher return igual a 1 --> preenche a vaga
+caso contrário
+ nao preenche
+*/
+int preencher(int sala, int filaLetra, int numero_da_poltrona)
 {
-//	int poltronas_disponiveis[20];
 	int verificar_as_cadeiras_usadas=0;
 	
-	if(poltrona[sl][filaD][np]=='0'){
-		poltrona[sl][filaD][np]=='1';
+	if(poltrona[sala][filaLetra][numero_da_poltrona]=='0'){
+		poltrona[sala][filaLetra][numero_da_poltrona]=='1';
 		return 1;
 	}
 	else{
 		printf("****Lugar ocupado****\na procurar lugar mais próximo na mesma fileira...\n");
 		for(int i=0;i<20;i++){
-			if (poltrona[sl][filaD][i]=='0'){
-				poltrona[sl][filaD][i]=1;
-				return 1;
-			  break;
+			if (poltrona[sala][filaLetra][i]=='0'){
+				poltrona[sala][filaLetra][i]='1';
+				return 1;														 //caso tenha preenchido retorna 1													// e sai do loop
 			}else verificar_as_cadeiras_usadas++;
 		}
 
-		//se var verificar_as_cadeiras_usadas == 20 entao todas as cadeiras foram usadas daquela fila
+		//se verificar_as_cadeiras_usadas igual a 20 entao todas as cadeiras foram usadas daquela fila
 		if (verificar_as_cadeiras_usadas==20){
 			return 0;
 		}

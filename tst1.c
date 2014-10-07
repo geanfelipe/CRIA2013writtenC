@@ -19,11 +19,14 @@ int main()
 
 int procure(int x)
 {
+int opo=200;
 	for (int i=0;i<10;i++){
 		printf("--%d\n",i);
 		if (x == i){
-			return 1+1;
+			opo=1 ;
+			return opo;
 		}
 	}
+	return opo;
 	
 }

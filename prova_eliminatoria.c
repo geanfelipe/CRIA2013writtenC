@@ -16,29 +16,44 @@ void iniciar();
 int preencher(int, int, int);
 
 
+/*********************************OBSERVAÇAO***************************************/
+/*se trocar a ordem de leitura de entrada do usuário dá bug na leitura da variável*/
+/* 												     de nome caracter																		*/
+/**********************************************************************************/
 int main()
 {
-	char caracter=' ';
+	char caracter;
 	int ok, filaLetra, sala,numero_da_poltrona;
 
 	iniciar();
-	
-	printf("digite letra da fileira: ");
-	scanf("%c",&caracter);
+	printf("#");
+	printf("\n|Salas existentes -> 1 a 3|\n|Letras das fileiras existentes -> A a U|\n|Número de poltronas existentes -> 1 a 20|\n");
+	printf("#");
+	while (1)
+	{
+		printf("\ndigite letra da fileira[A..U]: ");
+		scanf("%c",&caracter);
+		
+		filaLetra=letra_das_fileiras(caracter); //retorna o valor em int da posicao da letra inserida pelo usuário no vetor	
+		if (filaLetra<21) break;
+	}
 
-	printf("Qual o numero da sala[1/2/3]: ");
-	scanf("%d",&sala);
+	while(1)
+	{
+		printf("qual o numero da sala[1/2/3]: ");
+		scanf("%d",&sala);
+		if ((sala ==1) | (sala==2) | (sala==3)) break;
+	}															
 
-	printf("digite número da poltrona: ");
-	scanf("%d",&numero_da_poltrona);
-
-	filaLetra=letra_das_fileiras(caracter); //retorna o valor em int da posicao da letra inserida pelo usuário no vetor
-	printf("posicao do char %c é %d\n",caracter ,filaLetra);
-
-	/*ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu e 0 se nao nao prencheeu
-	if (ok) printf ("\nDEU CERTO\n");
-	printf(" %c = letraFileira\n ",caracter);*/
-	
+	while(1)
+	{
+		printf("digite número da poltrona[1..20]: ");
+		scanf("%d",&numero_da_poltrona);
+		if ((numero_da_poltrona>1) & (numero_da_poltrona<21)) break;
+	}
+	numero_da_poltrona=numero_da_poltrona-1;						//posicao é de 0 a 19
+	ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu e 0 se nao nao prencheeu
+	if (ok) printf ("\nCompra efetuada,Obrigado!\n");
 
 	return 0;
 }
@@ -58,9 +73,11 @@ void iniciar()
 //retorna em int a posicao da letra na fila
 int letra_das_fileiras(char caracterVerificacao)
 {
-int posicao_da_letra=0;
-//caso o char for minusculo , o toupper põe em maiuscula
-caracterVerificacao = toupper(caracterVerificacao);
+/*existe um bug em relação ao retorno 0 pois se a letra nao for encontrada é retornado 0 e também é retornado esse mesmo valor se a letra a procurar for 'A' . Por isso inicia-se posicao_da_letra igual a 100(podia ser qualquer valor acima de 20) assim , na funcao main() se compara se o retorno da funcao é maior que 20(pois comeca em 0, indo até 20) podendo-se deduzir se foi a letra existe ou nao*/
+
+int posicao_da_letra=100;
+
+	caracterVerificacao = toupper(caracterVerificacao);   //caso o char for minusculo , o toupper põe em maiuscula
 
 	for(int i=0;i<21;i++){
 		if (matrizFileira[i]==caracterVerificacao){
@@ -68,13 +85,11 @@ caracterVerificacao = toupper(caracterVerificacao);
 			return posicao_da_letra;
 		}
 	}
+
+	return posicao_da_letra;
 }
 
-/*funcao para caso
- preencher return igual a 1 --> preenche a vaga
-caso contrário
- nao preenche
-*/
+/*funcao para caso preencher return igual a 1 --> preenche a vaga caso contrário nao preenche */
 int preencher(int sala, int filaLetra, int numero_da_poltrona)
 {
 	int verificar_as_cadeiras_usadas=0;

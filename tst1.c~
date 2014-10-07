@@ -12,18 +12,21 @@ int main()
 	if (y) printf("eita poha,iguazim a %d\n ",c);
 	else printf("eita poha,nem parece com %d\n",c);
 	
-	printf("y = %d",y);
+	printf("y = %d\n",y);
 
 	return 0;
 }
 
 int procure(int x)
 {
+int opo=200;
 	for (int i=0;i<10;i++){
 		printf("--%d\n",i);
 		if (x == i){
-			return 1+1;
+			opo=1 ;
+			return opo;
 		}
 	}
+	return opo;
 	
 }
