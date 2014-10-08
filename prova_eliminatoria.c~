@@ -23,37 +23,62 @@ int preencher(int, int, int);
 int main()
 {
 	char caracter;
-	int ok, filaLetra, sala,numero_da_poltrona;
+	int ok, filaLetra, sala,numero_da_poltrona,opcao=1;
+	
 
 	iniciar();
+
+	printf("\n                                   Seja Bem Vindo\n");
 	printf("#");
-	printf("\n|Salas existentes -> 1 a 3|\n|Letras das fileiras existentes -> A a U|\n|Número de poltronas existentes -> 1 a 20|\n");
-	printf("#");
-	while (1)
+	printf("\n|Salas existentes -> 1 a 3|\n|Letras das fileiras existentes -> A a U|\n|Número de poltronas existentes -> Fileira A até E: 1 a 8 de F até U: 1 a 20|\n");
+	printf("#\n");
+	printf("Opções de Navegação\n");
+
+	while (1)   //loop principal do programa
 	{
-		printf("\ndigite letra da fileira[A..U]: ");
-		scanf("%c",&caracter);
+		printf("\n0) Sair\n");
+		printf("1) Efetuar compra\n");
+
+		while(1)  //loop das opcoes
+		{
+			printf(": ");
+			scanf("%d",&opcao);
+			if(opcao<3) break;
+		}
+
+		if (opcao==0) break;
+
+		if (opcao==1)
+		{
+			while (1)
+			{
+				printf("\ndigite letra da fileira[A..U]: ");
+				scanf("%c",&caracter);
 		
-		filaLetra=letra_das_fileiras(caracter); //retorna o valor em int da posicao da letra inserida pelo usuário no vetor	
-		if (filaLetra<21) break;
-	}
+				filaLetra=letra_das_fileiras(caracter); //retorna o valor em int da posicao da letra inserida pelo usuário no vetor	
+				if (filaLetra<21) break;
+			}
 
-	while(1)
-	{
-		printf("qual o numero da sala[1/2/3]: ");
-		scanf("%d",&sala);
-		if ((sala ==1) | (sala==2) | (sala==3)) break;
-	}															
+			while(1)
+			{
+				printf("qual o numero da sala[1/2/3]: ");
+				scanf("%d",&sala);
+				if ((sala ==1) | (sala==2) | (sala==3)) break;
+			}															
 
-	while(1)
-	{
-		printf("digite número da poltrona[1..20]: ");
-		scanf("%d",&numero_da_poltrona);
-		if ((numero_da_poltrona>1) & (numero_da_poltrona<21)) break;
+			while(1)
+			{
+				printf("digite número da poltrona: ");
+				scanf("%d",&numero_da_poltrona);
+				if ((numero_da_poltrona>0) & (numero_da_poltrona<21)) break;
+			}
+
+			numero_da_poltrona=numero_da_poltrona-1;						//posicao é de 0 a 19
+			ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu e 0 se nao nao prencheeu
+			if (ok) printf ("\nCompra efetuada,Obrigado!\n");
+		}
+		
 	}
-	numero_da_poltrona=numero_da_poltrona-1;
-	ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu e 0 se nao nao prencheeu
-	if (ok) printf ("\nCompra efetuada,Obrigado!\n");
 
 	return 0;
 }
