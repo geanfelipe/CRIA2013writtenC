@@ -25,3 +25,14 @@ Merge branch 'master' of github.com:geanfelipe/CRIA2013
 # the commit.
 tentando enviar arquivos pela 1 vez ao repositorio
 wednesday 11 set 2014
+*** Modified files in JOE when it aborted on Fri Oct 10 15:23:31 2014
+*** JOE was aborted by signal 1
+
+*** File '.git/MERGE_MSG'
+Merge branch 'master' of github.com:geanfelipe/CRIA2013
+
+# Please enter a commit message to explain why this merge is necessary,
+# especially if it merges an updated upstream into a topic branch.
+# 
+# Lines starting with '#' will be ignored, and an empty message aborts
+# the commit.

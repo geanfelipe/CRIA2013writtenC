@@ -87,6 +87,7 @@ int main()
 						scanf("%d",&numero_da_poltrona);
 						if((numero_da_poltrona>0) & (numero_da_poltrona<21)) break;
 					}
+				break;
 				}
 			}
 
