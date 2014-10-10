@@ -68,12 +68,31 @@ int main()
 
 			while(1)
 			{
-				printf("digite número da poltrona: ");
-				scanf("%d",&numero_da_poltrona);
-				if ((numero_da_poltrona>0) & (numero_da_poltrona<21)) break;
+				if(filaLetra<6)
+				{
+					while(1)
+					{
+						printf("digite número da poltrona: ");
+						scanf("%d",&numero_da_poltrona);
+						if((numero_da_poltrona<9) & (numero_da_poltrona>0) & (numero_da_poltrona<21)) break;
+						printf("#fileiras de A a E, as poltronas existentes são de 1 a 8\n");
+					}
+					break;
+				}
+				else
+				{
+					while(1)
+					{
+						printf("digite número da poltrona: ");
+						scanf("%d",&numero_da_poltrona);
+						if((numero_da_poltrona>0) & (numero_da_poltrona<21)) break;
+					}
+				}
 			}
 
 			numero_da_poltrona=numero_da_poltrona-1;						//posicao é de 0 a 19
+			sala = sala - 1;																		//posicao é de 0 a 2
+			printf("numero da poltrona escolhida foi %d\nfileira escolhida foi %d letra %c \n numero da sala %d\n", numero_da_poltrona, filaLetra, caracter, sala);
 			ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu e 0 se nao nao prencheeu
 			if (ok) printf ("\nCompra efetuada,Obrigado!\n");
 		}
