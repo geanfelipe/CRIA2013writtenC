@@ -5,15 +5,17 @@
 São três salas idênticas com 360 lugares
 */
 
+int posicoes_puladas=0;
 int numero_da_poltrona;
 char poltrona[3][21][20];
 char matrizFileira[]="ABCDEFGHIJKLMNOPQRSTU";
 char matrizFileiraInvalida[]="VXYZ";
 
+
 /*declarando as funcoes*/
 int letra_das_fileiras(char);
 void iniciar();
-int preencher(int, int, int);
+char preencher(int, int, int);
 
 
 /*********************************OBSERVAÇAO***************************************/
@@ -22,8 +24,8 @@ int preencher(int, int, int);
 /**********************************************************************************/
 int main()
 {
-	char caracter;
-	int ok, filaLetra, sala,numero_da_poltrona,opcao=1;
+	char caracter,ok;
+	int filaLetra, sala,numero_da_poltrona,opcao, posicao_anterior='x';
 	
 
 	iniciar();
@@ -91,13 +93,19 @@ int main()
 				}
 			}
 
+			
 			numero_da_poltrona=numero_da_poltrona-1;						//posicao é de 0 a 19
 			sala = sala - 1;																		//posicao é de 0 a 2
-			printf("numero da poltrona escolhida foi %d\nfileira escolhida foi %d letra %c \n numero da sala %d\n", numero_da_poltrona, filaLetra, caracter, sala);
 			ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu e 0 se nao nao prencheeu
-			if (ok) printf ("\nCompra efetuada,Obrigado!\n");
+	
+//		printf("funcao retornou %c\n", ok);
+//		printf(" mas posicao é %c\n", poltrona[sala][filaLetra][numero_da_poltrona]);			
+
+			if (ok=='1') printf ("\nCompra efetuada,Obrigado!\n");
+			else if (ok=='2') printf("\nLugar já ocupado, escolhemos para você o lugar mais próximo de número %d\nCompra efetuada,Obrigado!\n",posicoes_puladas+1);
+			else printf("\nDesculpe, fileira lotada\n");
 		}
-		
+	
 	}
 
 	return 0;
@@ -135,26 +143,24 @@ int posicao_da_letra=100;
 }
 
 /*funcao para caso preencher return igual a 1 --> preenche a vaga caso contrário nao preenche */
-int preencher(int sala, int filaLetra, int numero_da_poltrona)
-{
-	int verificar_as_cadeiras_usadas=0;
-	
-	if(poltrona[sala][filaLetra][numero_da_poltrona]=='0'){
-		poltrona[sala][filaLetra][numero_da_poltrona]=='1';
-		return 1;
+char  preencher(int sala, int filaLetra, int numero_da_poltrona)
+{	
+	if(poltrona[sala][filaLetra][numero_da_poltrona]=='0')
+	{
+		poltrona[sala][filaLetra][numero_da_poltrona]='1';
+	  return poltrona[sala][filaLetra][numero_da_poltrona];
 	}
-	else{
-		printf("****Lugar ocupado****\na procurar lugar mais próximo na mesma fileira...\n");
-		for(int i=0;i<20;i++){
-			if (poltrona[sala][filaLetra][i]=='0'){
+	else
+	{
+		for(int i=0;i<20;i++)
+		{
+			posicoes_puladas=i;										//posicoes_puladas é uma variável global
+			if(poltrona[sala][filaLetra][i]=='0')
+			{
 				poltrona[sala][filaLetra][i]='1';
-				return 1;														 //caso tenha preenchido retorna 1													// e sai do loop
-			}else verificar_as_cadeiras_usadas++;
+				return '2';
+			}
 		}
-
-		//se verificar_as_cadeiras_usadas igual a 20 entao todas as cadeiras foram usadas daquela fila
-		if (verificar_as_cadeiras_usadas==20){
-			return 0;
-		}
+		return '0';
 	}
 }
