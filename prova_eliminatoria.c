@@ -16,7 +16,7 @@ char matrizFileiraInvalida[]="VXYZ";
 int letra_das_fileiras(char);
 void iniciar();
 char preencher(int, int, int);
-
+char situacao_das_salas(void);
 
 /*********************************OBSERVAÇAO***************************************/
 /*se trocar a ordem de leitura de entrada do usuário dá bug na leitura da variável*/
@@ -24,7 +24,7 @@ char preencher(int, int, int);
 /**********************************************************************************/
 int main()
 {
-	char caracter,ok;
+	char caracter,ok, status_das_salas;
 	int filaLetra, sala,numero_da_poltrona,opcao, posicao_anterior='x';
 	
 
@@ -40,6 +40,7 @@ int main()
 	{
 		printf("\n0) Sair\n");
 		printf("1) Efetuar compra\n");
+		printf("2) Situação das salas\n");
 
 		while(1)  //loop das opcoes
 		{
@@ -96,16 +97,35 @@ int main()
 			
 			numero_da_poltrona=numero_da_poltrona-1;						//posicao é de 0 a 19
 			sala = sala - 1;																		//posicao é de 0 a 2
-			ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu e 0 se nao nao prencheeu
+			ok=preencher(sala,filaLetra,numero_da_poltrona);		//retorna 1 se preencheu na vaga escolhida pelo usuário , 2 se a vaga escolhida já estiver preenchida e então é preenchido em uma poltrona mais próxima e 0 se nao nao prencheeu
 	
 //		printf("funcao retornou %c\n", ok);
 //		printf(" mas posicao é %c\n", poltrona[sala][filaLetra][numero_da_poltrona]);			
 
 			if (ok=='1') printf ("\nCompra efetuada,Obrigado!\n");
-			else if (ok=='2') printf("\nLugar já ocupado, escolhemos para você o lugar mais próximo de número %d\nCompra efetuada,Obrigado!\n",posicoes_puladas+1);
+			else if (ok=='2') printf("\nLugar já ocupado, escolhemos para você a poltrona mais próxima de número %d\nCompra efetuada,Obrigado!\n",posicoes_puladas+1);
 			else printf("\nDesculpe, fileira lotada\n");
 		}
-	
+
+		if(opcao==2)
+		{
+			printf("\n");
+			status_das_salas=situacao_das_salas();
+			if(status_das_salas=='1')
+			{
+				printf("Sala 1 mais ocupada");
+			}
+			else if(status_das_salas=='2')
+			{
+				printf("Sala 2 mais ocupada");
+			}
+			else if(status_das_salas=='3')
+			{
+				printf("Sala 3 mais ocupada");
+			}
+			else printf("Salas vazias");
+		}
+		printf("\n");
 	}
 
 	return 0;
@@ -163,4 +183,46 @@ char  preencher(int sala, int filaLetra, int numero_da_poltrona)
 		}
 		return '0';
 	}
+}
+
+char situacao_das_salas()
+{
+	int lugares_vagos_sala0,lugares_vagos_sala1,lugares_vagos_sala2;
+
+	//verificar a sala 1
+	for(int w=0;w<3;w++)
+	{
+		for(int x=0;x<21;x++)
+		{
+			for(int y=0;y<20;y++)
+			{
+				if (poltrona[0][x][y]=='1')
+				{
+					lugares_vagos_sala0++;	
+				}
+				if(poltrona[1][x][y]=='1')
+				{
+					lugares_vagos_sala1++;
+				}
+				if(poltrona[2][x][y]=='1')
+				{
+					lugares_vagos_sala2++;
+				}
+			}
+		}
+	}
+		
+	if((lugares_vagos_sala0>lugares_vagos_sala1) & (lugares_vagos_sala0>lugares_vagos_sala2))
+	{
+		return '1';
+	}
+	else if((lugares_vagos_sala1>lugares_vagos_sala0) & (lugares_vagos_sala1>lugares_vagos_sala2))
+	{
+		return '2';
+	}
+	else if((lugares_vagos_sala2>lugares_vagos_sala0) & (lugares_vagos_sala2>lugares_vagos_sala1))
+	{
+		return '3';
+	}
+	else return '0';
 }
