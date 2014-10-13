@@ -46,7 +46,7 @@ int main()
 		{
 			printf(": ");
 			scanf("%d",&opcao);
-			if(opcao<3) break;
+			if(opcao<4) break;
 		}
 
 		if (opcao==0) break;
@@ -111,6 +111,7 @@ int main()
 		{
 			printf("\n");
 			status_das_salas=situacao_das_salas();
+			printf("retornou %c \n");
 			if(status_das_salas=='1')
 			{
 				printf("Sala 1 mais ocupada");
@@ -125,7 +126,23 @@ int main()
 			}
 			else printf("Salas vazias");
 		}
-		printf("\n");
+	
+		if(opcao==3)
+		{
+			for(int i=0;i<3;i++)
+			{
+				for(int x=0;x<21;x++)
+				{
+					for(int y=0;y<20;y++)
+					{
+						printf(" %c",poltrona[i][x][y]);
+					}
+					printf("\n");
+				}
+				printf("\n");
+			}
+		}
+	printf("\n");
 	}
 
 	return 0;
@@ -189,9 +206,7 @@ char situacao_das_salas()
 {
 	int lugares_vagos_sala0,lugares_vagos_sala1,lugares_vagos_sala2;
 
-	//verificar a sala 1
-	for(int w=0;w<3;w++)
-	{
+	//verificar salas
 		for(int x=0;x<21;x++)
 		{
 			for(int y=0;y<20;y++)
@@ -210,7 +225,6 @@ char situacao_das_salas()
 				}
 			}
 		}
-	}
 		
 	if((lugares_vagos_sala0>lugares_vagos_sala1) & (lugares_vagos_sala0>lugares_vagos_sala2))
 	{
